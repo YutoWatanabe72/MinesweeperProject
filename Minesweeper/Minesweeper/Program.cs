@@ -10,6 +10,7 @@ namespace Minesweeper
     class Program
     {
         public int stageSize = 0;
+        public int bomCount = 0;
         public int playerPosX = 3;
         public int playerPosY = 3;
         public int[,] stage = new int[0,0];
@@ -33,6 +34,7 @@ namespace Minesweeper
                     if (num >= 5 && num <= 20)
                     {
                         stageSize = num;
+                        bomCount = stageSize;
 
                         //stage配列
                         //左：横軸　右：縦軸
@@ -69,7 +71,14 @@ namespace Minesweeper
                     }
                     else
                     {
-                        Console.Write(stage[j,i]);
+                        if (stageFlag[j, i] == 1)
+                        {
+                            Console.Write(stage[j, i]);
+                        }
+                        else
+                        {
+                            Console.Write("〇");
+                        }
                     }
                 }
                 Console.WriteLine();
@@ -111,12 +120,12 @@ namespace Minesweeper
             playerPosY += _y;
         }
 
-        //ステージの生成
+        //爆弾の生成
         public void CreateStage()
         {
             if (created != 0) return;
             int count = 0;
-            while(count < stageSize)
+            while(count < bomCount)
             {
                 Random rnd = new Random();
                 int x = rnd.Next(0, stageSize);
