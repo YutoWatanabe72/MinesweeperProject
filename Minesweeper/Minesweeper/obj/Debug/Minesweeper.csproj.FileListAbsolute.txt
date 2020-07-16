@@ -1,0 +1,7 @@
+C:\Users\yutow\Desktop\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe.config
+C:\Users\yutow\Desktop\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe
+C:\Users\yutow\Desktop\Minesweeper\Minesweeper\bin\Debug\Minesweeper.pdb
+C:\Users\yutow\Desktop\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csprojAssemblyReference.cache
+C:\Users\yutow\Desktop\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csproj.CoreCompileInputs.cache
+C:\Users\yutow\Desktop\Minesweeper\Minesweeper\obj\Debug\Minesweeper.exe
+C:\Users\yutow\Desktop\Minesweeper\Minesweeper\obj\Debug\Minesweeper.pdb
