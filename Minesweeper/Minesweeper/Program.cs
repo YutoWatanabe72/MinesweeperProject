@@ -9,7 +9,7 @@ namespace Minesweeper
 {
     class Program
     {
-        public int stageSize = 0;
+        public int stageSize = 0;//盤面のサイズ
         public int bomCount = 0;
         public int playerPosX = 3;
         public int playerPosY = 3;
@@ -105,7 +105,7 @@ namespace Minesweeper
                     break;
                 case ConsoleKey.Enter:
                     CreateStage();
-                    stageFlag[playerPosX, playerPosY] = 1;
+                    tileOpen(playerPosX,playerPosY);
                     break;
                 default:
                     break;
@@ -132,11 +132,58 @@ namespace Minesweeper
                 int y = rnd.Next(0, stageSize);
                 if(stage[x,y] == 0 && x != playerPosX && y != playerPosY)
                 {
-                    stage[x, y] = 1;
+                    stage[x, y] = 9;
                     count++;
                 }
             }
             created++;
+        }
+
+        //接している爆弾の個数を調べる
+        public int NumCheck(int _x, int _y)
+        {
+            if (stage[_x, _y] == 9) return 9;
+            int n = 0;
+            for(int i = -1; i <= 1; i++)
+            {
+                for(int j = -1; j <= 1; j++)
+                {
+                    if (BomCheck(_x + j, _y + i)) n++;
+                }
+            }
+            return n;
+        }
+
+        /// <summary>
+        /// 爆弾と接しているかどうか
+        /// </summary>
+        /// <param name="_x">プレイヤーカーソルのｘ座標</param>
+        /// <param name="_y">プレイヤーカーソルのｙ座標</param>
+        /// <return>true = 接している</returns>
+        public bool BomCheck(int _x, int _y)
+        {
+            if (_x < 0 || _x >= stageSize || _y < 0 || _y >= stageSize) return false;//送られてきた座標データが盤面サイズ以上かどうか判断
+            if (stage[_x, _y] == 9) return true;
+            else return false;
+        }
+
+        public void tileOpen(int _x, int _y)
+        {
+
+            if (_x < 0 || _x >= stageSize || _y < 0 || _y >= stageSize
+                || stageFlag[_x, _y] != 0) return;
+
+            stage[_x, _y] = NumCheck(_x, _y);
+
+            stageFlag[_x, _y] = 1;
+            
+            if (stage[_x,_y] == 0)
+            {
+                tileOpen(_x - 1, _y);
+                tileOpen(_x + 1, _y);
+                tileOpen(_x, _y - 1);
+                tileOpen(_x, _y + 1);//爆弾に接している数を調べるタイミングを変える
+            }
         }
 
         static void Main(string[] args)
