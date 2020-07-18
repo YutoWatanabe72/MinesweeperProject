@@ -40,6 +40,7 @@ namespace Minesweeper
                         //左：横軸　右：縦軸
                         stage = new int[stageSize, stageSize];
                         stageFlag = new int[stageSize, stageSize];
+                        created = 0;
                         return;
                     }
                     else
@@ -73,7 +74,10 @@ namespace Minesweeper
                     {
                         if (stageFlag[j, i] == 1)
                         {
-                            Console.Write(stage[j, i]);
+                            int n = stage[j, i];
+                            char num = '０';
+                            n += (int)num;
+                            Console.Write((char)n);
                         }
                         else
                         {
@@ -167,6 +171,11 @@ namespace Minesweeper
             else return false;
         }
 
+        /// <summary>
+        /// 爆弾と接していなければタイルをオープン
+        /// </summary>
+        /// <param name="_x"></param>
+        /// <param name="_y"></param>
         public void tileOpen(int _x, int _y)
         {
 
@@ -176,14 +185,28 @@ namespace Minesweeper
             stage[_x, _y] = NumCheck(_x, _y);
 
             stageFlag[_x, _y] = 1;
+
+            if(stage[_x, _y] == 9)
+            {
+                GameEnd();
+            }
             
             if (stage[_x,_y] == 0)
             {
+                tileOpen(_x - 1, _y + 1);
                 tileOpen(_x - 1, _y);
+                tileOpen(_x - 1, _y - 1);
+                tileOpen(_x + 1, _y + 1);
                 tileOpen(_x + 1, _y);
+                tileOpen(_x + 1, _y - 1);
                 tileOpen(_x, _y - 1);
-                tileOpen(_x, _y + 1);//爆弾に接している数を調べるタイミングを変える
+                tileOpen(_x, _y + 1);
             }
+        }
+
+        public void GameEnd()
+        {
+            System.Media.SystemSounds.Hand.Play();
         }
 
         static void Main(string[] args)
