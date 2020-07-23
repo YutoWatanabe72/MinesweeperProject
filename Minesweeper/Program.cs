@@ -423,6 +423,7 @@ namespace Minesweeper
 
             } while (!program.gameEnd);
 
+            Console.ReadKey();
         }
     }
 }
